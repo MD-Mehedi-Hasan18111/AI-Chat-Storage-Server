@@ -87,6 +87,4 @@ app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
 
-module.exports = (req, res) => {
-  res.status(200).send("Server is runnning");
-};
+module.exports = app;
