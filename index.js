@@ -18,7 +18,8 @@ async function run() {
   try {
     await client.connect();
     // const database = await connectToDatabase();
-    const database = client.db("ChatStoreage");;
+    const database = client.db("ChatStoreage");
+    console.log("Database connected");
     const messagesCollection = database.collection("messages");
     // API Routes
 
@@ -85,3 +86,7 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
+
+module.exports = (req, res) => {
+  res.status(200).send("Server is runnning");
+};
