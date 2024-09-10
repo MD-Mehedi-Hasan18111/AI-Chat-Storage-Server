@@ -4,24 +4,27 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // MongoDB connection URI
-const uri =
-  process.env.MONGO_URI ||
-  `mongodb+srv://dummy_storage:93K7vpjWY0aPkBh0@cluster0.yai2s.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://dummy_storage:93K7vpjWY0aPkBh0@cluster0.yai2s.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri);
 
 // Database connection
+let cachedDb = null;
 async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb;
+  }
   try {
     await client.connect();
+    cachedDb = client.db("ChatStoreage");
     console.log("Database Connected");
-    return client.db("ChatStoreage");
+    return cachedDb;
   } catch (error) {
     console.error("Failed to connect to the database:", error);
     throw error;
