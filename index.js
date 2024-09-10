@@ -86,16 +86,16 @@ async function setupRoutes(database) {
 }
 
 // Run server and database connection
-async function runServer() {
+async function run() {
   try {
     const database = await connectToDatabase();
     await setupRoutes(database);
-  } catch (error) {
-    console.error("Error starting server:", error);
+  } finally {
+    // await client.close();
   }
 }
 
-runServer();
+run().catch(console.dir);
 
 // Default route
 app.get("/", (req, res) => {
