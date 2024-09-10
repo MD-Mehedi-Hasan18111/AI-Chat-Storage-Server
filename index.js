@@ -83,11 +83,6 @@ async function setupRoutes(database) {
       res.status(500).send({ error: "Internal server error" });
     }
   });
-
-  // Default route
-  app.get("/", (req, res) => {
-    res.send("Dummy Storage Server Running...");
-  });
 }
 
 // Run server and database connection
@@ -95,13 +90,18 @@ async function runServer() {
   try {
     const database = await connectToDatabase();
     await setupRoutes(database);
-
-    app.listen(port, () => {
-      console.log(`Server running on port: ${port}`);
-    });
   } catch (error) {
     console.error("Error starting server:", error);
   }
 }
 
 runServer();
+
+// Default route
+app.get("/", (req, res) => {
+  res.send("Dummy Storage Server Running...");
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
+});
