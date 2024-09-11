@@ -51,7 +51,7 @@ async function run() {
       try {
         const messageData = req.body;
         // Validate if messageData exists
-        if (!messageData || !messageData.content) {
+        if (!messageData) {
           return res.status(400).send({ error: "Message content is required" });
         }
 
