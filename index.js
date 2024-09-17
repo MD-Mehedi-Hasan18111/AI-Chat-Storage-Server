@@ -18,6 +18,11 @@ async function run() {
   try {
     await client.connect();
     // const database = await connectToDatabase();
+
+    app.listen(port, () => {
+      console.log(`Server running on port: ${port}`);
+    });
+
     const database = client.db("ChatStoreage");
     console.log("Database connected");
     const messagesCollection = database.collection("messages");
@@ -81,8 +86,4 @@ run().catch(console.dir);
 // Default route
 app.get("/", (req, res) => {
   res.send("Dummy Storage Server Running...");
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
 });
