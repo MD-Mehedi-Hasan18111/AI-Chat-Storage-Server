@@ -52,6 +52,24 @@ async function run() {
       }
     });
 
+    app.delete("/messages/user/:userid", async (req, res) => {
+      try {
+        const { userid } = req.params;
+
+        // Query to delete messages by userid
+        const deleteResult = await messagesCollection.deleteMany({ userid });
+
+        if (deleteResult.deletedCount > 0) {
+          res.status(200).send({ message: "Messages deleted successfully" });
+        } else {
+          res.status(404).send({ message: "No messages found for this user" });
+        }
+      } catch (error) {
+        console.error("Failed to delete messages:", error);
+        res.status(500).send({ error: "Failed to delete messages" });
+      }
+    });
+
     app.post("/save-message", async (req, res) => {
       try {
         const messageData = req.body;
